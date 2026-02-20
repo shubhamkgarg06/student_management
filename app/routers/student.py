@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.views.student import StudentCRUD
-from app.schemas.student import student_Sch
+from views.student import StudentCRUD
+from schemas.student import student_Sch
 
 
 

@@ -2,9 +2,9 @@
     This module consist of all CRUD mehtod functions for student data.
 """
 
-from app.utils.connection_manag import sessionLocal
-from app.schemas.student import student_Sch
-from app.models.students import Student_mod
+from utils.connection_manag import sessionLocal
+from schemas.student import student_Sch
+from models.students import Student_mod
 
 class StudentCRUD:
 
