@@ -1,28 +1,38 @@
-from app.utils.connection_manag import get_connection , release_connection
+from sqlalchemy import Column, Integer, String
+from app.utils.connection_manag import Base
+from app.utils.connection_manag import engine, Base
 
 
-sql = """
-        CREATE TABLE IF NOT EXISTS student (
-            id INT PRIMARY KEY,
-            name VARCHAR(255),
-            fathers_name VARCHAR(255),
-            age INT
-        )
-        """
+class Student_mod(Base):
+    __tablename__ = 'students'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    fathers_name = Column(String)
+    age = Column(Integer)
 
-def create_student_table():
 
-    conn  = get_connection()
-    cur = conn.cursor()
+# sql = """
+#         CREATE TABLE IF NOT EXISTS student (
+#             id INT PRIMARY KEY,
+#             name VARCHAR(255),
+#             fathers_name VARCHAR(255),
+#             age INT
+#         )
+#         """
 
-    try:
-        cur.execute(sql)
-        conn.commit()
-        print("Student Table Created")
-    except Exception as e:
-        print("Error creating table:", e)
-        conn.rollback()
-        raise
-    finally:
-        cur.close()
-        release_connection(conn)
+# def create_student_table():
+
+#     conn  = get_connection()
+#     cur = conn.cursor()
+
+#     try:
+#         cur.execute(sql)
+#         conn.commit()
+#         print("Student Table Created")
+#     except Exception as e:
+#         print("Error creating table:", e)
+#         conn.rollback()
+#         raise
+#     finally:
+#         cur.close()
+#         release_connection(conn)

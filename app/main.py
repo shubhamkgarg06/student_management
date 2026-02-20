@@ -1,15 +1,13 @@
 from fastapi import FastAPI
 from routers import student
-from app.utils.connection_manag import init_db
-from models.students import create_student_table
+from app.utils.connection_manag import engine,Base
 
 app = FastAPI()
 
 
 @app.on_event("startup")
 def startup():
-    init_db()
-    create_student_table()
+    Base.metadata.create_all(blind=engine)
 
 
 
