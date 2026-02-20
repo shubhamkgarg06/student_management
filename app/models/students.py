@@ -1,4 +1,4 @@
-from db.database import get_connection
+from app.utils.connection_manag import get_connection , release_connection
 
 
 sql = """
@@ -25,8 +25,4 @@ def create_student_table():
         raise
     finally:
         cur.close()
-        conn.close()
-
-
-if __name__ == "__main__":
-    create_student_table()
+        release_connection(conn)

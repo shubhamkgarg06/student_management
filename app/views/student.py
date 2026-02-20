@@ -2,7 +2,7 @@
     This module consist of all CRUD mehtod functions for student data.
 """
 
-from app.utils.connection_manag import get_connection
+from app.utils.connection_manag import get_connection , release_connection
 from app.schemas.student import student_Sch
 
 
@@ -42,7 +42,7 @@ class StudentCRUD:
         """
         Creates a student record in the database..
         """
-        
+
         sql = """
             INSERT INTO student (id, name, fathers_name, age)
             VALUES (%s, %s, %s, %s)
