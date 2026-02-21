@@ -2,9 +2,10 @@
     This module consist of all CRUD mehtod functions for student data.
 """
 
-from utils.connection_manag import sessionLocal
-from schemas.student import student_Sch
-from models.students import Student_mod
+from app.utils.connection_manag import sessionLocal
+from app.models.students import Student_mod
+from app.schemas.student import student_Sch
+
 
 class StudentCRUD:
 
@@ -26,55 +27,72 @@ class StudentCRUD:
 
 
 
-    # def get_student_by_id(self, student_id: int):
-    #     """
-    #     Return a student record from the database using the student's ID.
-    #     """
-    #     sql = "SELECT * FROM student WHERE id = %s"
-    #     self.cur.execute(sql, (student_id,))
-    #     return self.cur.fetchone()
+    def get_student_by_id(self, student_id: int):
+        """
+        Return a student record from the database using the student's ID.
+        """
+
+        student = self.db.query(Student_mod).filter(Student_mod.id == student_id).first()
+
+        if student is None:
+            return {"mesage" : "No such student exist"}
+        return student
 
 
 
-    # def create_student(self, student: student_Sch):
-    #     """
-    #     Creates a student record in the database..
-    #     """
+    def create_student(self, student: student_Sch):
+        """
+        Creates a student record in the database..
+        """
 
-    #     sql = """
-    #         INSERT INTO student (id, name, fathers_name, age)
-    #         VALUES (%s, %s, %s, %s)
-    #     """
-    #     self.cur.execute(sql, (student.id, student.name, student.fathers_name, student.age))
-    #     self.conn.commit()
-    #     return {"message": "Student created successfully"}
+        new_student = Student_mod(
+            id=student.id,
+            name=student.name,
+            fathers_name=student.fathers_name,
+            age=student.age
+        )
 
+        self.db.add(new_student)
+        self.db.commit()
+        self.db.refresh(new_student)
 
-
-    # def update_student_data(self , student_id:int , student: student_Sch):
-    #     """
-    #     Updates the student record in the database as instructed using student id
-    #     """
-
-    #     sql = """
-    #                 UPDATE student
-    #                 SET name = %s , fathers_name = %s , age = %s
-    #                 WHERE id = %s
-    #         """  
-         
-    #     self.cur.execute(sql , (student.name , student.fathers_name , student.age , student_id ,))
-    #     self.conn.commit()
-    #     return {"message": "Student data updated"}
-    
+        return {"message": "Student created successfully"}
 
 
-    # def delete_student(self, student_id: int):
-    #     """
-    #     Delete a student record from the database using the student's ID.
-    #     """
-    #     sql = "DELETE FROM student WHERE id = %s"
-    #     self.cur.execute(sql, (student_id,))
-    #     self.conn.commit()
-    #     return {"message": "Deleted successfully"}  
+
+    def update_student_data(self , student_id:int , updated_student: student_Sch):
+        """
+        Updates the student record in the database as instructed using student id
+        """
+
+        student = self.db.get(Student_mod , student_id)
+
+        if student is None:
+            return None
+        
+        student.name = updated_student.name
+        student.fathers_name = updated_student.fathers_name
+        student.age = updated_student.age
+
+        self.db.commit()
+        self.db.refresh(student)
+
+        return student
+
+
+
+    def delete_student(self, student_id: int):
+        """
+        Delete a student record from the database using the student's ID.
+        """
+        student = self.db.get(Student_mod, student_id)
+
+        if student is None:
+            return None
+
+        self.db.delete(student)
+        self.db.commit()
+
+        return student
 
 

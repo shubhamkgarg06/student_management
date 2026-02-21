@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from views.student import StudentCRUD
-from schemas.student import student_Sch
+from app.views.student import StudentCRUD
+from app.schemas.student import student_Sch
 
 
 
@@ -12,6 +12,7 @@ stud_obj = StudentCRUD()
 @router.get('/students/')
 def get_students():
     return stud_obj.get_all_students()
+
 
 @router.get('/students/{id_find}')
 def get_std_id(id_find : int):

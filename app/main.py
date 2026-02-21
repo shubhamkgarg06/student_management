@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routers import student
-from utils.connection_manag import engine,Base
+from app.routers import student
+from app.utils.connection_manag import engine,Base
 
 app = FastAPI()
 

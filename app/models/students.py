@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from utils.connection_manag import Base
-from utils.connection_manag import engine, Base
+from app.utils.connection_manag import Base
 
 
 class Student_mod(Base):
