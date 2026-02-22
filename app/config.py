@@ -1,5 +1,10 @@
-from dotenv import load_dotenv
+"""
+Configuration file for the application. 
+It loads environment variables and constructs the database URL.
+"""
 import os
+from dotenv import load_dotenv
+
 
 load_dotenv()  # loads variables from .env
 
@@ -10,9 +15,5 @@ DB_PORT = os.getenv("DB_PORT")
 DB_HOST = os.getenv("DB_HOST")
 
 
+# Construct the database URL for SQLAlchemy
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-
-# DATABASE_URL = (
-#     f"dbname={DB_NAME} user={DB_USER} password={DB_PASS} host={DB_HOST} port={DB_PORT}"
-# )

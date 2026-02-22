@@ -1,37 +1,16 @@
+"""
+This module defines the StudentModel class, which represents the students table in the database.
+"""
 from sqlalchemy import Column, Integer, String
 from app.utils.connection_manag import Base
 
 
-class Student_mod(Base):
+class StudentModel(Base):
+    """
+    This class represents the students table in the database.
+    """
     __tablename__ = 'students'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    fathers_name = Column(String)
+    father_name = Column(String)
     age = Column(Integer)
-
-
-# sql = """
-#         CREATE TABLE IF NOT EXISTS student (
-#             id INT PRIMARY KEY,
-#             name VARCHAR(255),
-#             fathers_name VARCHAR(255),
-#             age INT
-#         )
-#         """
-
-# def create_student_table():
-
-#     conn  = get_connection()
-#     cur = conn.cursor()
-
-#     try:
-#         cur.execute(sql)
-#         conn.commit()
-#         print("Student Table Created")
-#     except Exception as e:
-#         print("Error creating table:", e)
-#         conn.rollback()
-#         raise
-#     finally:
-#         cur.close()
-#         release_connection(conn)

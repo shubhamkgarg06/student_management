@@ -1,8 +1,15 @@
+"""
+This module defines the Pydantic model for a student in the school management system. 
+The model includes fields for the student's ID, name, father's name, and age.
+"""
 from pydantic import BaseModel
 
-class student_Sch(BaseModel):
+
+class StudentSchema(BaseModel):
+    """
+    Pydantic model for a student in the school management system.
+    """
     id : int
     name : str
-    fathers_name : str
+    father_name : str
     age : int
-    
