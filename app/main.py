@@ -26,7 +26,7 @@ async def lifespan(_app: FastAPI):
 
 
 # Create a FastAPI application instance.
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 
 # Include the student router to handle student-related API endpoints.

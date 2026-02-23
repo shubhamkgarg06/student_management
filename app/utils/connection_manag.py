@@ -13,6 +13,9 @@ Base = declarative_base()
 
 #  Dependency function
 def get_db():
+    """
+    This function is used to manage database connections.
+    """
     db = sessionLocal()
     try:
         yield db

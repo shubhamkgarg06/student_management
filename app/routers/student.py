@@ -20,6 +20,7 @@ def home():
     """
     return {"message": "Welcome to the Student API!"}
 
+
 @router.get('/students/')
 def get_students(db: Session = Depends(get_db)):
     """
@@ -34,8 +35,8 @@ def get_std_id(id_find : int, db: Session = Depends(get_db)):
     """
     Retrieve a student record by its ID.
     """
-    stud_obj = StudentCRUD(db)
-    return stud_obj.get_student_by_id(id_find)
+    student_obj = StudentCRUD(db)
+    return student_obj.get_student_by_id(id_find)
 
 
 @router.post('/students/')
@@ -43,8 +44,8 @@ def add_student(std : StudentSchema, db: Session = Depends(get_db)):
     """
     Create a new student record in the database.
     """
-    stud_obj = StudentCRUD(db)
-    return stud_obj.create_student(std)
+    student_obj = StudentCRUD(db)
+    return student_obj.create_student(std)
 
 
 
@@ -53,8 +54,8 @@ def update_student(id_up : int , std_data : StudentSchema, db: Session = Depends
     """
     Update an existing student record in the database.
     """
-    stud_obj = StudentCRUD(db)
-    return stud_obj.update_student_data(id_up , std_data)
+    student_obj = StudentCRUD(db)
+    return student_obj.update_student_data(id_up , std_data)
 
 
 
@@ -63,15 +64,15 @@ def delete_std_data(id_del : int, db: Session = Depends(get_db)):
     """
     Delete a student record from the database.
     """
-    stud_obj = StudentCRUD(db)
-    return stud_obj.delete_student(id_del)
+    student_obj = StudentCRUD(db)
+    return student_obj.delete_student(id_del)
 
 
 
 @router.patch('/students/{id_patch}')
 def patch_student_data(
-        id_patch : int , 
-        student: StudentPatchSchema , 
+        id_patch : int,
+        student: StudentPatchSchema,
         db : Session = Depends(get_db)
     ):
 
@@ -79,6 +80,5 @@ def patch_student_data(
     Partially update a students data
     """
 
-    stud_obj = StudentCRUD(db)
-    return stud_obj.patch_student_data(id_patch , student)
-
+    student_obj = StudentCRUD(db)
+    return student_obj.patch_student_data(id_patch , student)

@@ -10,13 +10,7 @@ class StudentCRUD:
     """
     Handles all CRUD operations on student data
     """
-
-    # def __init__(self):
-    #     """
-    #         Initializes the StudentCRUD class by creating a database session.
-    #     """
-    #     self.db = sessionLocal()
-
+    
     def __init__(self, db):
         self.db = db
     
