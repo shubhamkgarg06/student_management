@@ -10,3 +10,11 @@ from app.config import DATABASE_URL
 engine = create_engine(DATABASE_URL , echo=True)
 sessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
+
+#  Dependency function
+def get_db():
+    db = sessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
