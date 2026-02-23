@@ -5,7 +5,7 @@ It uses FastAPI's APIRouter to create endpoints for CRUD operations on student r
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from app.views.student import StudentCRUD
-from app.schemas.student import StudentSchema
+from app.schemas.student import StudentSchema , StudentPatchSchema
 from app.utils.connection_manag import get_db
 
 
@@ -67,4 +67,18 @@ def delete_std_data(id_del : int, db: Session = Depends(get_db)):
     return stud_obj.delete_student(id_del)
 
 
+
+@router.patch('/students/{id_patch}')
+def patch_student_data(
+        id_patch : int , 
+        student: StudentPatchSchema , 
+        db : Session = Depends(get_db)
+    ):
+
+    """
+    Partially update a students data
+    """
+
+    stud_obj = StudentCRUD(db)
+    return stud_obj.patch_student_data(id_patch , student)
 

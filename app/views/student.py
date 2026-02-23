@@ -1,10 +1,8 @@
 """
     This module consist of all CRUD mehtod functions for student data.
 """
-
-from app.utils.connection_manag import sessionLocal
 from app.models.students import StudentModel
-from app.schemas.student import StudentSchema
+from app.schemas.student import StudentSchema , StudentPatchSchema
 
 
 class StudentCRUD:
@@ -109,3 +107,24 @@ class StudentCRUD:
         return student
 
 
+
+    def patch_student_data(self, student_id : int , updated_data: StudentPatchSchema):
+        """
+        Partially updates the student fields
+        """
+
+        student = self.db.get(StudentModel , student_id)
+
+        if student is None:
+            return {"message" : "No such student exist"}
+   
+        update_data = updated_data.model_dump(exclude_unset=True)
+
+        for key, value in update_data.items():
+            setattr(student, key, value)
+
+        self.db.commit()
+        self.db.refresh(student)
+
+        return student
+ 

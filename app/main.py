@@ -13,7 +13,7 @@ from app.utils.connection_manag import engine,Base
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
     """
     Manage application startup and shutdown events.
 
