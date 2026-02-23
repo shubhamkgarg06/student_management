@@ -35,6 +35,20 @@ class StudentCRUD:
             return {"message": "No such student exists"}
         
         return student
+    
+
+
+    def get_student_by_section_id(self, section_id: int):
+        """
+        Return all students in a specific section.
+        """
+
+        students = self.db.query(StudentModel).filter(StudentModel.section_id == section_id).all()
+
+        if not students:
+            return {"message": "No students found in this section"}
+        
+        return students
 
 
 

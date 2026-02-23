@@ -14,6 +14,7 @@ class StudentSchema(BaseModel):
     name : str
     father_name : str
     age : int
+    section_id : int
 
 
 class StudentPatchSchema(BaseModel):

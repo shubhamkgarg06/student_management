@@ -7,7 +7,7 @@ registers API routers, and creates database tables on startup.
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.routers import student
+from app.routers import student , section
 from app.utils.connection_manag import engine,Base
 
 
@@ -31,3 +31,4 @@ app = FastAPI(lifespan=lifespan)
 
 # Include the student router to handle student-related API endpoints.
 app.include_router(student.router)
+app.include_router(section.router)

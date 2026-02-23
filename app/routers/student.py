@@ -39,6 +39,15 @@ def get_std_id(id_find : int, db: Session = Depends(get_db)):
     return student_obj.get_student_by_id(id_find)
 
 
+@router.get('/students/{section_id_find}')
+def get_std_id(section_id_find : int, db: Session = Depends(get_db)):
+    """
+    Retrieve all students in a specific section.
+    """
+    student_obj = StudentCRUD(db)
+    return student_obj.get_student_by_section_id(section_id_find)
+
+
 @router.post('/students/')
 def add_student(std : StudentSchema, db: Session = Depends(get_db)):
     """
