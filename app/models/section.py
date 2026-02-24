@@ -19,7 +19,7 @@ class SectionModel(Base , DBBase):
     section_name = Column(String)
 
     students = relationship(
-        "Student",          # name of the related class
+        "StudentModel",          # name of the related class
         back_populates="section",  # link to the attribute in the child class
         cascade="all, delete-orphan"  # optional, what happens when parent is deleted
     )

@@ -1,5 +1,7 @@
 """
     This module consist of all CRUD method functions for section data.
+    It includes methods for getting all sections, getting a section by ID, creating a new section,
+    and retrieving students by section name.
 """
 from app.models.section import SectionModel
 from app.schemas.section import SectionSchema
@@ -7,10 +9,13 @@ from app.schemas.section import SectionSchema
 class SectionCRUD:
 
     """
-    Handles all CRUD operations on section data
+    Handles all CRUD operations on data in section table in database.
     """
 
     def __init__(self, db):
+        """
+        Initializes the SectionCRUD class with a database session.
+        """
         self.db = db
 
 
@@ -37,10 +42,10 @@ class SectionCRUD:
 
     def create_section(self, new_section: SectionSchema):
         """
-        Creates a section record in the database..
+        Creates a section record in the database.
         """
 
-        # 🔍 Check if section already exists
+        # Check if section already exists
         existing_section = self.db.get(SectionModel, new_section.id)
 
         if existing_section:
@@ -49,18 +54,42 @@ class SectionCRUD:
         # Create a new section record
         new_section_model = SectionModel(
             id=new_section.id,
-            section_name=new_section.name
+            section_name=new_section.section_name
         )
 
         self.db.add(new_section_model)
         self.db.commit()
         self.db.refresh(new_section_model)
+        return {"message": "Section created successfully"}
+    
 
+    def update_section(self , id_upd : int , updated_section: SectionSchema):
+        """
+        Update a section record in the database using the section's ID.
+        """
+
+        # Find the section by ID
+        section = self.db.query(SectionModel).filter(SectionModel.id == id_upd).first()
+
+        if not section:
+            return {"message": "No such section exists"}
+
+        # Update the section's attributes
+        update_data = updated_section.model_dump(exclude_unset=True)
+
+        for key, value in update_data.items():
+            setattr(section, key, value)
+
+        self.db.commit()
+        self.db.refresh(section)
+        return {"message": "Section updated successfully"}
+    
 
 
     def get_students_by_section_name(self, section_name: str):
         """
         Return all students in a section given the section name.
+        It return a list of student records that belong to the specified section.
         """
         
         # Find the section by name
@@ -70,4 +99,5 @@ class SectionCRUD:
 
         # Return all students in that section
         return section.students
+    
     

@@ -23,4 +23,4 @@ class StudentModel(Base, DBBase):
     section_id = Column(Integer, ForeignKey('sections.id'))
 
     # Link back to section
-    section = relationship("Section", back_populates="students")
+    section = relationship("SectionModel", back_populates="students")

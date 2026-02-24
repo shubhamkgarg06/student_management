@@ -25,3 +25,4 @@ class StudentPatchSchema(BaseModel):
     name: Optional[str] = None
     father_name: Optional[str] = None
     age: Optional[int] = None
+    section_id: Optional[int] = None

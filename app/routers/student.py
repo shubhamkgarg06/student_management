@@ -1,6 +1,8 @@
 """
 This module defines the API routes for managing student data in the application. 
 It uses FastAPI's APIRouter to create endpoints for CRUD operations on student records. 
+It includes routes for retrieving all students, getting a student by ID, getting students by section ID, 
+creating a new student, updating an existing student, deleting a student, and partially updating a student's data
 """
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
@@ -21,6 +23,7 @@ def home():
     return {"message": "Welcome to the Student API!"}
 
 
+
 @router.get('/students/')
 def get_students(db: Session = Depends(get_db)):
     """
@@ -30,22 +33,25 @@ def get_students(db: Session = Depends(get_db)):
     return stud_obj.get_all_students()
 
 
+
 @router.get('/students/{id_find}')
 def get_std_id(id_find : int, db: Session = Depends(get_db)):
     """
     Retrieve a student record by its ID.
     """
     student_obj = StudentCRUD(db)
-    return student_obj.get_student_by_id(id_find)
+    return student_obj.get_student_by_section_id(id_find)
+
 
 
 @router.get('/students/{section_id_find}')
-def get_std_id(section_id_find : int, db: Session = Depends(get_db)):
+def get_std_by_section_id(section_id_find : int, db: Session = Depends(get_db)):
     """
     Retrieve all students in a specific section.
     """
     student_obj = StudentCRUD(db)
     return student_obj.get_student_by_section_id(section_id_find)
+
 
 
 @router.post('/students/')

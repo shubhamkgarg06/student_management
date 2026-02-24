@@ -12,6 +12,7 @@ It allows users to create, read, update, patch and delete student records.
 - PostgreSQL
 - Uvicorn
 - Pydantic
+- SqlAlchemy
 
 
 
@@ -31,9 +32,4 @@ It allows users to create, read, update, patch and delete student records.
 
 ## Run the Server
 
-uvicorn main:app --reload
-
-
-## Run the Server
-
-uvicorn main:app --reload
+uvicorn app.main:app --reload

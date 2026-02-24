@@ -38,16 +38,16 @@ class StudentCRUD:
     
 
 
-    def get_student_by_section_id(self, section_id: int):
+    def get_student_by_section_id(self, section_id_find: int):
         """
         Return all students in a specific section.
         """
 
-        students = self.db.query(StudentModel).filter(StudentModel.section_id == section_id).all()
+        students = self.db.query(StudentModel).filter(StudentModel.section_id == section_id_find).all()
 
         if not students:
             return {"message": "No students found in this section"}
-        
+
         return students
 
 
@@ -68,7 +68,8 @@ class StudentCRUD:
             id=new_student.id,
             name=new_student.name,
             father_name=new_student.father_name,
-            age=new_student.age
+            age=new_student.age,
+            section_id=new_student.section_id
         )
 
         self.db.add(new_student_model)
@@ -88,15 +89,16 @@ class StudentCRUD:
 
         if student is None:
             return {"message": "No such student exists"}
-        
-        student.name = updated_student.name
-        student.father_name = updated_student.father_name
-        student.age = updated_student.age
+
+        update_data = updated_student.model_dump(exclude_unset=True)
+
+        for key, value in update_data.items():
+            setattr(student, key, value)
 
         self.db.commit()
         self.db.refresh(student)
 
-        return student
+        return {"message": "Student updated successfully"}
 
 
 
@@ -112,7 +114,7 @@ class StudentCRUD:
         self.db.delete(student)
         self.db.commit()
 
-        return student
+        return {"message" : "Student deleted successfully"}
 
 
 
@@ -134,5 +136,5 @@ class StudentCRUD:
         self.db.commit()
         self.db.refresh(student)
 
-        return student
+        return {"message" : "Student data patched successfully"}
  
