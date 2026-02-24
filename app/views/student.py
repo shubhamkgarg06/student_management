@@ -10,10 +10,10 @@ class StudentCRUD:
     """
     Handles all CRUD operations on student data
     """
-    
+
     def __init__(self, db):
         self.db = db
-    
+
 
     def get_all_students(self):
         """
@@ -33,9 +33,9 @@ class StudentCRUD:
 
         if student is None:
             return {"message": "No such student exists"}
-        
+
         return student
-    
+
 
 
     def get_student_by_section_id(self, section_id_find: int):

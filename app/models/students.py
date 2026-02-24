@@ -25,7 +25,8 @@ class StudentModel(Base, DBBase):
     age = Column(Integer)
 
     # This is the foreign key column that references the sections table
-    section_id = Column(Integer, ForeignKey('sections.id'))
+    # Combination of student id and section id is primary key because a student can be in multiple sections but only once in each section
+    section_id = Column(Integer, ForeignKey('sections.id') , primary_key=True)
 
     # Link back to section
     # This creates a relationship between the StudentModel and SectionModel classes, allowing us to access the section information for each student.

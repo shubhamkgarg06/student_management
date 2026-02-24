@@ -13,7 +13,10 @@ from app.utils.connection_manag import get_db
 
 
 # Initialize the API router
-router = APIRouter()
+router = APIRouter(
+    prefix = "/students",
+    tags = ['students']
+)
 
 @router.get('/')
 def home():

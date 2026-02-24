@@ -20,6 +20,10 @@ def get_db():
     db = sessionLocal()
     try:
         yield db
+        db.commit()
+    except:
+        db.rollback()
+        raise
     finally:
         db.close()
 

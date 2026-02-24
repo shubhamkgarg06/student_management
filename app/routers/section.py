@@ -10,7 +10,10 @@ from app.schemas.section import SectionSchema
 from app.utils.connection_manag import get_db
 
 # Initialize the API router
-router = APIRouter()
+router = APIRouter(
+    prefix = "/sections",
+    tags = ['sections']
+)
 
 @router.get('/sections/')
 def get_sections(db: Session = Depends(get_db)):
