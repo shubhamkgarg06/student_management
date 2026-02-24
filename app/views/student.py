@@ -58,7 +58,7 @@ class StudentCRUD:
         """
 
         # Check if student already exists
-        existing_student = self.db.get(StudentModel, new_student.id)
+        existing_student = self.db.get(StudentModel, (new_student.id , new_student.section_id))
 
         if existing_student:
             return {"message": "Student with this ID already exists"}

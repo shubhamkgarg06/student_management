@@ -22,7 +22,7 @@ def get_subjects(db: Session = Depends(get_db)):
     Retrieve all subject records from the database.
     """
     subject_obj = SubjectCRUD(db)
-    return subject_obj.get_all_subjects()   
+    return subject_obj.get_all_subjects()
 
 
 

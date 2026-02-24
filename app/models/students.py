@@ -31,3 +31,11 @@ class StudentModel(Base, DBBase):
     # Link back to section
     # This creates a relationship between the StudentModel and SectionModel classes, allowing us to access the section information for each student.
     section = relationship("SectionModel", back_populates="students")
+
+    # This creates a relationship between the StudentModel and MidtermMarksModel classes, allowing us to access the marks for each student.
+    # This is a parent model to the MidtermMarksModel class, which means that when a student is deleted, all the marks associated with that student will also be deleted.
+    marks = relationship(
+        "MidtermMarksModel",
+        back_populates="student",
+        cascade="all, delete-orphan"
+    )

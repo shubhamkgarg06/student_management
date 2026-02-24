@@ -27,3 +27,12 @@ class SectionModel(Base , DBBase):
         back_populates="section",  # link to the attribute in the child class
         cascade="all, delete-orphan"  # optional, what happens when parent is deleted
     )
+
+    # This creates a relationship between the SectionModel and MidtermMarksModel classes, allowing us to access the marks for each section.
+    # This is a parent model to the MidtermMarksModel class, which means that when a section is deleted, all the marks associated with that section will also be deleted.
+    
+    marks = relationship(
+        "MidtermMarksModel",
+        back_populates="section",
+        cascade="all, delete-orphan"
+    )
