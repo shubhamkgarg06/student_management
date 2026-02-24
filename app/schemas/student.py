@@ -2,8 +2,9 @@
 This module defines the Pydantic model for a student in the school management system. 
 The model includes fields for the student's ID, name, father's name, and age.
 """
-from pydantic import BaseModel
 from typing import Optional
+from pydantic import BaseModel
+
 
 
 class StudentSchema(BaseModel):
@@ -19,7 +20,7 @@ class StudentSchema(BaseModel):
 
 class StudentPatchSchema(BaseModel):
     """
-    Pydantic model for updating student information in the school management system.
+    Pydantic model for patching student information in the school management system.
     All fields are optional to allow partial updates.
     """
     name: Optional[str] = None

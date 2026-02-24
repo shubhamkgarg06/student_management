@@ -11,13 +11,17 @@ class SectionModel(Base , DBBase):
 
     """
     This class represents the section table in the database.
-    This table is connected to student table using relationship
+    This table is connected to student table using relationship.
+    It consist two columns id and section_name. 
+    The id column is the primary key and section_name column stores the name of the section.
+    It also has a relationship with the StudentModel class, allowing us to access the students in each section.
     """
 
     __tablename__ = 'sections'
     id = Column(Integer, primary_key=True)
     section_name = Column(String)
 
+    # This creates a relationship between the SectionModel and StudentModel classes, allowing us to access the students in each section.
     students = relationship(
         "StudentModel",          # name of the related class
         back_populates="section",  # link to the attribute in the child class

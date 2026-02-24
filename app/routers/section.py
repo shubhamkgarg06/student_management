@@ -20,6 +20,7 @@ def get_sections(db: Session = Depends(get_db)):
     section_obj = SectionCRUD(db)
     return section_obj.get_all_sections()           
 
+
 @router.get('/sections/{id_find}')
 def get_section_by_id(id_find : int, db: Session = Depends(get_db)):
     """
@@ -27,6 +28,7 @@ def get_section_by_id(id_find : int, db: Session = Depends(get_db)):
     """
     section_obj = SectionCRUD(db)
     return section_obj.get_section_by_id(id_find)
+
 
 @router.post('/sections/')
 def add_section(section : SectionSchema, db: Session = Depends(get_db)):    
@@ -55,3 +57,4 @@ def get_students_by_section_name(section_name: str, db: Session = Depends(get_db
     """
     section_obj = SectionCRUD(db)
     return section_obj.get_students_by_section_name(section_name)
+

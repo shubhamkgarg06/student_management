@@ -12,6 +12,9 @@ class StudentModel(Base, DBBase):
     """
     This class represents the students table in the database.
     This table is connected to the sections table using a foreign key relationship.
+    It consists of columns for id, name, father's name, age, and section_id.
+    The id column is the primary key, while the section_id column is a foreign key that references the sections table.
+    It also has a relationship with the SectionModel class, allowing us to access the section information for each student.
     """
 
 
@@ -20,7 +23,10 @@ class StudentModel(Base, DBBase):
     name = Column(String)
     father_name = Column(String)
     age = Column(Integer)
+
+    # This is the foreign key column that references the sections table
     section_id = Column(Integer, ForeignKey('sections.id'))
 
     # Link back to section
+    # This creates a relationship between the StudentModel and SectionModel classes, allowing us to access the section information for each student.
     section = relationship("SectionModel", back_populates="students")

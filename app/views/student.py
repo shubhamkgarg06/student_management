@@ -57,20 +57,14 @@ class StudentCRUD:
         Creates a student record in the database..
         """
 
-        # 🔍 Check if student already exists
+        # Check if student already exists
         existing_student = self.db.get(StudentModel, new_student.id)
 
         if existing_student:
             return {"message": "Student with this ID already exists"}
-        
-        # 📦 Create a new student record
-        new_student_model = StudentModel(
-            id=new_student.id,
-            name=new_student.name,
-            father_name=new_student.father_name,
-            age=new_student.age,
-            section_id=new_student.section_id
-        )
+
+        # Create a new student record
+        new_student_model = StudentModel(**new_student.model_dump())
 
         self.db.add(new_student_model)
         self.db.commit()

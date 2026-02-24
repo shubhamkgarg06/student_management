@@ -36,7 +36,7 @@ class SectionCRUD:
 
         if section is None:
             return {"message": "No such section exists"}
-        
+
         return section
 
 
@@ -50,18 +50,15 @@ class SectionCRUD:
 
         if existing_section:
             return {"message": "Section with this ID already exists"}
-        
+
         # Create a new section record
-        new_section_model = SectionModel(
-            id=new_section.id,
-            section_name=new_section.section_name
-        )
+        new_section_model = SectionModel(**new_section.model_dump())
 
         self.db.add(new_section_model)
         self.db.commit()
         self.db.refresh(new_section_model)
         return {"message": "Section created successfully"}
-    
+
 
     def update_section(self , id_upd : int , updated_section: SectionSchema):
         """
@@ -83,7 +80,7 @@ class SectionCRUD:
         self.db.commit()
         self.db.refresh(section)
         return {"message": "Section updated successfully"}
-    
+
 
 
     def get_students_by_section_name(self, section_name: str):
@@ -91,7 +88,7 @@ class SectionCRUD:
         Return all students in a section given the section name.
         It return a list of student records that belong to the specified section.
         """
-        
+
         # Find the section by name
         section = self.db.query(SectionModel).filter(SectionModel.section_name == section_name).first()
         if not section:
@@ -99,5 +96,5 @@ class SectionCRUD:
 
         # Return all students in that section
         return section.students
-    
-    
+
+

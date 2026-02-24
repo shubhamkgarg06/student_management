@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import DATABASE_URL
 
-
+# Declare the database engine, session maker, and base class for declarative models
 engine = create_engine(DATABASE_URL , echo=True)
 sessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
