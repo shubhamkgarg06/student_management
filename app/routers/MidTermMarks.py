@@ -40,3 +40,12 @@ def get_marks_by_criteria(student_id: int = None, subject_id: int = None, sectio
     """
     marks_obj = MidTermMarksCRUD(db)
     return marks_obj.get_marks_by_specific_criteria(student_id, subject_id, section_id)
+
+
+@router.get('/marks/percentage')
+def get_percentage(student_id: int , section_id: int , db: Session = Depends(get_db)):
+    """
+    Calculate the percentage of marks obtained by a specific student in a specific section.
+    """
+    marks_obj = MidTermMarksCRUD(db)
+    return marks_obj.get_percentage_of_student(student_id , section_id)

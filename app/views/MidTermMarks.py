@@ -1,6 +1,8 @@
 """
 This module defines the MidTermMarksCRUD class, which handles all CRUD operations for the midterm
-marks data in the database. It includes methods for creating new midterm marks records, retrieving all midterm marks, and searching for midterm marks based on specific criteria such as student ID, subject ID, or section ID. The class interacts with the database using SQLAlchemy and uses Pydantic schemas for data validation and serialization.
+marks data in the database. It includes methods for creating new midterm marks records, retrieving all midterm marks, and searching for midterm marks based on specific criteria such as student ID, subject ID, or section ID. 
+The class interacts with the database using SQLAlchemy and uses Pydantic schemas for data validation and serialization.
+This also consist of a method to calculate the percentage of marks obtained by a specific student in a specific section, which can be useful for generating reports or analyzing student performance.
 """
 from app.models.MidTermMarks import MidTermMarksModel
 from app.schemas.MidTermMarks import MidTermMarksSchema
@@ -78,4 +80,31 @@ class MidTermMarksCRUD:
             return {"message": "No marks found for the given criteria"}
 
         return marks_data
+
+
+
+    def get_percentage_of_student(self , student_id:int , section_id:int):
+
+        """
+        Fetches the percentage of marks obtained by a specific student in a specific section.
+        The method calculates the total marks obtained by the student in the specified section and divides it by the total marks to get the percentage. 
+        If no marks are found for the given student and section, a message indicating that no marks were found will be returned. 
+        Otherwise, the method will return the calculated percentage.
+        """
+
+        marks_data = self.db.query(MidTermMarksModel).filter(
+            MidTermMarksModel.student_id == student_id,
+            MidTermMarksModel.section_id == section_id
+        ).all()
+
+        if not marks_data:
+            return {"message": "No marks found for the given student and section"}
+
+        total_marks_obtained = sum(mark.marks for mark in marks_data)
+        total = len(marks_data)*100
+
+        percentage = ((total_marks_obtained)/(total))*100
+
+        return percentage
+
 
