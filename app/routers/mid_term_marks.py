@@ -5,9 +5,11 @@ It includes routes for creating new midterm marks records, retrieving all midter
 
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
-from app.views.MidTermMarks import MidTermMarksCRUD
-from app.schemas.MidTermMarks import MidTermMarksSchema
-from app.utils.connection_manag import get_db
+from app.views.mid_term_marks import MidTermMarksCRUD
+from app.views.base_crud import BaseCRUD
+from app.schemas.mid_term_marks import MidTermMarksSchema
+from app.models.mid_term_marks import MidTermMarksModel
+from app.utils.connection_manag import DatabaseManager
 
 
 # Initialize the API router
@@ -16,8 +18,17 @@ router = APIRouter(
     tags = ['marks']
 )
 
-@router.post('/marks/')
-def add_marks(marks : MidTermMarksSchema, db: Session = Depends(get_db)):
+@router.get('/')
+def get_marks(db: Session = Depends(DatabaseManager.get_db)):
+    """
+    Retrieve all midterm marks records from the database.
+    """
+    marks_obj = BaseCRUD(db, MidTermMarksModel)
+    return marks_obj.get_all_records()
+
+
+@router.post('/')
+def add_marks(marks : MidTermMarksSchema, db: Session = Depends(DatabaseManager.get_db)):
     """
     Create a new midterm marks record in the database.
     """
@@ -25,16 +36,11 @@ def add_marks(marks : MidTermMarksSchema, db: Session = Depends(get_db)):
     return marks_obj.create_midterm_marks(marks)    
 
 
-@router.get('/marks/')
-def get_marks(db: Session = Depends(get_db)):
-    """
-    Retrieve all midterm marks records from the database.
-    """
-    marks_obj = MidTermMarksCRUD(db)
-    return marks_obj.get_marks_table_data() 
 
-@router.get('/marks/search')
-def get_marks_by_criteria(student_id: int = None, subject_id: int = None, section_id: int = None, db: Session = Depends(get_db)):
+
+
+@router.get('/search')
+def get_marks_by_criteria(student_id: int = None, subject_id: int = None, section_id: int = None, db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve midterm marks records based on specific criteria such as student ID, subject ID, or section ID.
     """
@@ -42,8 +48,9 @@ def get_marks_by_criteria(student_id: int = None, subject_id: int = None, sectio
     return marks_obj.get_marks_by_specific_criteria(student_id, subject_id, section_id)
 
 
-@router.get('/marks/percentage')
-def get_percentage(student_id: int , section_id: int , db: Session = Depends(get_db)):
+
+@router.get('/percentage')
+def get_percentage(student_id: int , section_id: int , db: Session = Depends(DatabaseManager.get_db)):
     """
     Calculate the percentage of marks obtained by a specific student in a specific section.
     """

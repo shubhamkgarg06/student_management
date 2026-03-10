@@ -7,8 +7,10 @@ creating a new student, updating an existing student, deleting a student, and pa
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from app.views.student import StudentCRUD
+from app.views.base_crud import BaseCRUD
 from app.schemas.student import StudentSchema , StudentPatchSchema
-from app.utils.connection_manag import get_db
+from app.models.students import StudentModel
+from app.utils.connection_manag import DatabaseManager
 
 
 
@@ -18,37 +20,30 @@ router = APIRouter(
     tags = ['students']
 )
 
+
+
 @router.get('/')
-def home():
-    """
-    Home endpoint that returns a welcome message.
-    """
-    return {"message": "Welcome to the Student API!"}
-
-
-
-@router.get('/students/')
-def get_students(db: Session = Depends(get_db)):
+def get_students(db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve all student records from the database.
     """
-    stud_obj = StudentCRUD(db)
-    return stud_obj.get_all_students()
+    stud_obj = BaseCRUD(db ,StudentModel)
+    return stud_obj.get_all_records()
 
 
 
-@router.get('/students/{id_find}')
-def get_std_id(id_find : int, db: Session = Depends(get_db)):
+@router.get('/{id_find}')
+def get_std_id(id_find : int, db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve a student record by its ID.
     """
-    student_obj = StudentCRUD(db)
-    return student_obj.get_student_by_section_id(id_find)
+    student_obj =BaseCRUD(db , StudentModel)
+    return student_obj.get_record_by_id(id_find)
 
 
 
-@router.get('/students/{section_id_find}')
-def get_std_by_section_id(section_id_find : int, db: Session = Depends(get_db)):
+@router.get('/{section_id_find}')
+def get_std_by_section_id(section_id_find : int, db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve all students in a specific section.
     """
@@ -57,8 +52,8 @@ def get_std_by_section_id(section_id_find : int, db: Session = Depends(get_db)):
 
 
 
-@router.post('/students/')
-def add_student(std : StudentSchema, db: Session = Depends(get_db)):
+@router.post('/')
+def add_student(std : StudentSchema, db: Session = Depends(DatabaseManager.get_db)):
     """
     Create a new student record in the database.
     """
@@ -67,31 +62,31 @@ def add_student(std : StudentSchema, db: Session = Depends(get_db)):
 
 
 
-@router.put('/students/{id_up}')
-def update_student(id_up : int , std_data : StudentSchema, db: Session = Depends(get_db)):
+@router.put('/{id_up}')
+def update_student(id_up : int , std_data : StudentSchema, db: Session = Depends(DatabaseManager.get_db)):
     """
     Update an existing student record in the database.
     """
-    student_obj = StudentCRUD(db)
-    return student_obj.update_student_data(id_up , std_data)
+    student_obj = BaseCRUD(db , StudentModel)
+    return student_obj.update_record(id_up , std_data)
 
 
 
-@router.delete('/students/{id_del}')
-def delete_std_data(id_del : int, db: Session = Depends(get_db)):
+@router.delete('/{id_del}')
+def delete_std_data(id_del : int, db: Session = Depends(DatabaseManager.get_db)):
     """
     Delete a student record from the database.
     """
-    student_obj = StudentCRUD(db)
-    return student_obj.delete_student(id_del)
+    student_obj = BaseCRUD(db , StudentModel)
+    return student_obj.delete_record(id_del)
 
 
 
-@router.patch('/students/{id_patch}')
+@router.patch('/{id_patch}')
 def patch_student_data(
         id_patch : int,
         student: StudentPatchSchema,
-        db : Session = Depends(get_db)
+        db : Session = Depends(DatabaseManager.get_db)
     ):
 
     """

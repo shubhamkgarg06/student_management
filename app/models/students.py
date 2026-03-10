@@ -4,13 +4,16 @@ This module defines the StudentModel class, which represents the students table 
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from app.utils.connection_manag import Base
+from app.utils.connection_manag import DatabaseManager
 from app.models.base import DBBase
 
 
-class StudentModel(Base, DBBase):
+class StudentModel(DatabaseManager.Base, DBBase):
     """
     This class represents the students table in the database.
+    :DatabaseManager.Base is the base class for all the models in the database, which is created using SQLAlchemy's declarative_base function.
+    :DBBase is a custom base class that we have defined in the app.models.base module, which contains common attributes and methods for all the models in the database.
+
     This table is connected to the sections table using a foreign key relationship.
     It consists of columns for id, name, father's name, age, and section_id.
     The id column is the primary key, while the section_id column is a foreign key that references the sections table.
@@ -35,7 +38,7 @@ class StudentModel(Base, DBBase):
     # This creates a relationship between the StudentModel and MidtermMarksModel classes, allowing us to access the marks for each student.
     # This is a parent model to the MidtermMarksModel class, which means that when a student is deleted, all the marks associated with that student will also be deleted.
     marks = relationship(
-        "MidtermMarksModel",
+        "MidTermMarksModel",
         back_populates="student",
         cascade="all, delete-orphan"
     )

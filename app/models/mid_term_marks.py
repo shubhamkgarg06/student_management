@@ -4,13 +4,16 @@ This module defines the MidTermMarksModel, which represents marks of different s
 
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from app.utils.connection_manag import Base
+from app.utils.connection_manag import DatabaseManager
 from app.models.base import DBBase
 
-class MidTermMarksModel(Base , DBBase):
+class MidTermMarksModel(DatabaseManager.Base , DBBase):
 
     """
     This class represents the midterm marks of students in different subjects.
+    :DatabaseManager.Base is the base class for all the models in the database, which is created using SQLAlchemy's declarative_base function.
+    :DBBase is a custom base class that we have defined in the app.models.base module, which contains common attributes and methods for all the models in the database.
+
     It consists of columns for student_id, subject_id, section_id and marks.
     The combination of student_id, subject_id and section_id is the primary key, which means that a student can have only one mark for a specific subject in a specific section.
     It also has relationships with the StudentModel, SubjectModel and SectionModel classes, allowing us to access the student, subject and section information for each mark.

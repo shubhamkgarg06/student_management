@@ -4,8 +4,9 @@ marks data in the database. It includes methods for creating new midterm marks r
 The class interacts with the database using SQLAlchemy and uses Pydantic schemas for data validation and serialization.
 This also consist of a method to calculate the percentage of marks obtained by a specific student in a specific section, which can be useful for generating reports or analyzing student performance.
 """
-from app.models.MidTermMarks import MidTermMarksModel
-from app.schemas.MidTermMarks import MidTermMarksSchema
+
+from app.models.mid_term_marks import MidTermMarksModel
+from app.schemas.mid_term_marks import MidTermMarksSchema
 
 
 class MidTermMarksCRUD:
@@ -42,16 +43,6 @@ class MidTermMarksCRUD:
         self.db.refresh(new_marks_model)
 
         return {"message": "Marks added successfully"}
-
-
-    def get_marks_table_data(self ):
-
-        """
-        Fetches the marks table data for a specific student.
-        """
-        marks_data = self.db.query(MidTermMarksModel).all()
-
-        return marks_data
 
 
     def get_marks_by_specific_criteria(self , student_id = None , subject_id = None , section_id = None):

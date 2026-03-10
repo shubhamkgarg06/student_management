@@ -4,9 +4,10 @@ Pydantic schemas for data validation and serialization."""
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.views.subject import SubjectCRUD
+from app.views.base_crud import BaseCRUD
 from app.schemas.subjects import SubjectSchema
-from app.utils.connection_manag import get_db
+from app.models.subjects import SubjectModel
+from app.utils.connection_manag import DatabaseManager
 
 # Initialize the API router
 router = APIRouter(
@@ -16,39 +17,49 @@ router = APIRouter(
 
 
 
-@router.get('/subjects/')
-def get_subjects(db: Session = Depends(get_db)):
+@router.get('/')
+def get_subjects(db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve all subject records from the database.
     """
-    subject_obj = SubjectCRUD(db)
-    return subject_obj.get_all_subjects()
+    subject_obj = BaseCRUD(db, SubjectModel)
+    return subject_obj.get_all_records()
 
 
 
 
-@router.get('/subjects/{id_find}')
-def get_subject_by_id(id_find : int, db: Session = Depends(get_db)):    
+@router.get('/{id_find}')
+def get_subject_by_id(id_find : int, db: Session = Depends(DatabaseManager.get_db)):    
     """
     Retrieve a subject record by its ID.
     """
-    subject_obj = SubjectCRUD(db)
-    return subject_obj.get_subject_by_id(id_find)
+    subject_obj = BaseCRUD(db, SubjectModel)
+    return subject_obj.get_record_by_id(id_find)
 
 
 
-@router.post('/subjects/')
-def add_subject(subject : SubjectSchema, db: Session = Depends(get_db)):    
+@router.post('/')
+def add_subject(subject : SubjectSchema, db: Session = Depends(DatabaseManager.get_db)):    
     """
     Create a new subject record in the database.
     """
-    subject_obj = SubjectCRUD(db)
-    return subject_obj.create_subject(subject)
+    subject_obj = BaseCRUD(db, SubjectModel)
+    return subject_obj.create_record(subject)
 
-@router.put('/subjects/{id_find}')
-def update_subject(id_find : int, subject : SubjectSchema, db: Session = Depends(get_db)):
+
+@router.put('/{id_find}')
+def update_subject(id_find : int, subject : SubjectSchema, db: Session = Depends(DatabaseManager.get_db)):
     """
     Update an existing subject record in the database.
     """
-    subject_obj = SubjectCRUD(db)
-    return subject_obj.update_subject(id_find, subject)
+    subject_obj = BaseCRUD(db, SubjectModel)
+    return subject_obj.update_record(id_find, subject)
+
+
+@router.delete('/{id_del}')
+def delete_subject(id_del: int, db: Session = Depends(DatabaseManager.get_db)):
+    """
+    Delete a subject record from the database.
+    """
+    subject_obj = BaseCRUD(db, SubjectModel)
+    return subject_obj.delete_record(id_del)

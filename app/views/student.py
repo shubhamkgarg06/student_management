@@ -15,29 +15,6 @@ class StudentCRUD:
         self.db = db
 
 
-    def get_all_students(self):
-        """
-        Return all student data present in database
-        """
-        students = self.db.query(StudentModel).all()
-        return students
-
-
-
-    def get_student_by_id(self, id_find: int):
-        """
-        Return a student record from the database using the student's ID.
-        """
-
-        student = self.db.query(StudentModel).filter(StudentModel.id == id_find).first()
-
-        if student is None:
-            return {"message": "No such student exists"}
-
-        return student
-
-
-
     def get_student_by_section_id(self, section_id_find: int):
         """
         Return all students in a specific section.
@@ -71,44 +48,6 @@ class StudentCRUD:
         self.db.refresh(new_student_model)
 
         return {"message": "Student created successfully"}
-
-
-
-    def update_student_data(self , id_up:int , updated_student: StudentSchema):
-        """
-        Updates the student record in the database as instructed using student id
-        """
-
-        student = self.db.get(StudentModel , id_up)
-
-        if student is None:
-            return {"message": "No such student exists"}
-
-        update_data = updated_student.model_dump(exclude_unset=True)
-
-        for key, value in update_data.items():
-            setattr(student, key, value)
-
-        self.db.commit()
-        self.db.refresh(student)
-
-        return {"message": "Student updated successfully"}
-
-
-
-    def delete_student(self, student_id: int):
-        """
-        Delete a student record from the database using the student's ID.
-        """
-        student = self.db.get(StudentModel, student_id)
-
-        if student is None:
-            return {"message": "No such student exists"}
-
-        self.db.delete(student)
-        self.db.commit()
-
-        return {"message" : "Student deleted successfully"}
 
 
 

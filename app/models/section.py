@@ -4,13 +4,16 @@ This module defines the SectionModel class, which represents the sections table 
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from app.utils.connection_manag import Base
+from app.utils.connection_manag import DatabaseManager
 from app.models.base import DBBase
 
-class SectionModel(Base , DBBase):
+class SectionModel(DatabaseManager.Base , DBBase):
 
     """
     This class represents the section table in the database.
+    :DatabaseManager.Base is the base class for all the models in the database, which is created using SQLAlchemy's declarative_base function.
+    :DBBase is a custom base class that we have defined in the app.models.base module, which contains common attributes and methods for all the models in the database.
+
     This table is connected to student table using relationship.
     It consist two columns id and section_name. 
     The id column is the primary key and section_name column stores the name of the section.
@@ -32,7 +35,7 @@ class SectionModel(Base , DBBase):
     # This is a parent model to the MidtermMarksModel class, which means that when a section is deleted, all the marks associated with that section will also be deleted.
     
     marks = relationship(
-        "MidtermMarksModel",
+        "MidTermMarksModel",
         back_populates="section",
         cascade="all, delete-orphan"
     )
