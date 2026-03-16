@@ -1,5 +1,5 @@
 """
-Main entry point of the Student Management API application.
+Main entry point of the Student Management System application.
 
 This module initializes the FastAPI app instance,
 registers API routers, and creates database tables on startup.
@@ -23,6 +23,9 @@ async def lifespan(_app: FastAPI):
     # Startup logic
     Base.metadata.create_all(bind=engine)
     yield
+
+    # shutdown
+    print("App shutting down")
 
 
 

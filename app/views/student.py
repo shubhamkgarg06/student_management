@@ -51,6 +51,40 @@ class StudentCRUD:
 
 
 
+    def update_student(self, student_id: int, section_id: int, updated_data: StudentSchema):
+        """
+        Updates the student record in the database.
+        """
+
+        student = self.db.get(StudentModel, (student_id , section_id))
+
+        if student is None:
+            return {"message": "No such student exist"}
+
+        for key, value in updated_data.model_dump().items():
+            setattr(student, key, value)
+
+        self.db.commit()
+        self.db.refresh(student)
+
+        return {"message": "Student data updated successfully"}
+    
+    def delete_student_record(self, student_id: int, section_id: int):
+        """
+        Deletes the student record from the database.
+        """
+
+        student = self.db.get(StudentModel, (student_id , section_id))
+
+        if student is None:
+            return {"message": "No such student exist"}
+
+        self.db.delete(student)
+        self.db.commit()
+
+        return {"message": "Student record deleted successfully"}
+    
+    
     def patch_student_data(self, student_id : int , updated_data: StudentPatchSchema):
         """
         Partially updates the student fields

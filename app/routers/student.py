@@ -42,7 +42,7 @@ def get_std_id(id_find : int, db: Session = Depends(DatabaseManager.get_db)):
 
 
 
-@router.get('/{section_id_find}')
+@router.get('/section/{section_id_find}')
 def get_std_by_section_id(section_id_find : int, db: Session = Depends(DatabaseManager.get_db)):
     """
     Retrieve all students in a specific section.
@@ -62,23 +62,23 @@ def add_student(std : StudentSchema, db: Session = Depends(DatabaseManager.get_d
 
 
 
-@router.put('/{id_up}')
-def update_student(id_up : int , std_data : StudentSchema, db: Session = Depends(DatabaseManager.get_db)):
+@router.put('/{id_up}/{section_id_up}')
+def update_student(id_up : int , section_id_up : int, std_data : StudentSchema, db: Session = Depends(DatabaseManager.get_db)):
     """
     Update an existing student record in the database.
     """
-    student_obj = BaseCRUD(db , StudentModel)
-    return student_obj.update_record(id_up , std_data)
+    student_obj = StudentCRUD(db)
+    return student_obj.update_student(id_up , section_id_up , std_data)
 
 
 
-@router.delete('/{id_del}')
-def delete_std_data(id_del : int, db: Session = Depends(DatabaseManager.get_db)):
+@router.delete('/{id_del}/{section_id_del}')
+def delete_std_data(id_del : int, section_id_del : int, db: Session = Depends(DatabaseManager.get_db)):
     """
     Delete a student record from the database.
     """
-    student_obj = BaseCRUD(db , StudentModel)
-    return student_obj.delete_record(id_del)
+    student_obj = StudentCRUD(db)
+    return student_obj.delete_student_record(id_del , section_id_del)
 
 
 
