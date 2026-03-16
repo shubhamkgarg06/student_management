@@ -5,7 +5,7 @@ This module defines the StudentModel class, which represents the students table 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.utils.connection_manag import DatabaseManager
-from app.models.base import DBBase
+from app.models.base_model import DBBase
 
 
 class StudentModel(DatabaseManager.Base, DBBase):

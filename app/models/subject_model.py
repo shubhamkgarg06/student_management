@@ -4,7 +4,7 @@ This module defines the SubjectModel class, which represents the subjects table 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.utils.connection_manag import DatabaseManager
-from app.models.base import DBBase
+from app.models.base_model import DBBase
 
 class SubjectModel(DatabaseManager.Base , DBBase):
 

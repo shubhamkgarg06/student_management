@@ -5,7 +5,7 @@ This module defines the MidTermMarksModel, which represents marks of different s
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from app.utils.connection_manag import DatabaseManager
-from app.models.base import DBBase
+from app.models.base_model import DBBase
 
 class MidTermMarksModel(DatabaseManager.Base , DBBase):
 

@@ -7,8 +7,8 @@ from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from app.views.section import SectionCRUD
 from app.views.base_crud import BaseCRUD
-from app.schemas.section import SectionSchema
-from app.models.section import SectionModel
+from app.schemas.section_schema import SectionSchema
+from app.models.section_model import SectionModel
 from app.utils.connection_manag import DatabaseManager
 
 # Initialize the API router

@@ -1,8 +1,8 @@
 """
     This module consist of all CRUD mehtod functions for student data.
 """
-from app.models.students import StudentModel
-from app.schemas.student import StudentSchema , StudentPatchSchema
+from app.models.student_model import StudentModel
+from app.schemas.student_schema import StudentSchema , StudentPatchSchema
 
 
 class StudentCRUD:

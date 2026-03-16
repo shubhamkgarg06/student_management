@@ -5,7 +5,7 @@ This module defines the SectionModel class, which represents the sections table 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.utils.connection_manag import DatabaseManager
-from app.models.base import DBBase
+from app.models.base_model import DBBase
 
 class SectionModel(DatabaseManager.Base , DBBase):
 

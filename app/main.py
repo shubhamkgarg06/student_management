@@ -7,7 +7,7 @@ registers API routers, and creates database tables on startup.
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.routers import mid_term_marks, student , section, subject
+from app.routers import mid_term_marks_router, section_router, student_router, subject_router
 from app.utils.connection_manag import DatabaseManager
 
 Base = DatabaseManager.Base
@@ -41,7 +41,7 @@ def home():
 
 
 # Include the student router to handle student-related API endpoints.
-app.include_router(student.router)
-app.include_router(section.router)
-app.include_router(subject.router)
-app.include_router(mid_term_marks.router)
+app.include_router(student_router.router)
+app.include_router(section_router.router)
+app.include_router(subject_router.router)
+app.include_router(mid_term_marks_router.router)

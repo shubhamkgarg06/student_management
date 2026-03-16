@@ -5,8 +5,8 @@ Pydantic schemas for data validation and serialization."""
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.views.base_crud import BaseCRUD
-from app.schemas.subjects import SubjectSchema
-from app.models.subjects import SubjectModel
+from app.schemas.subject_schema import SubjectSchema
+from app.models.subject_model import SubjectModel
 from app.utils.connection_manag import DatabaseManager
 
 # Initialize the API router

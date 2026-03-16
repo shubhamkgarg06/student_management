@@ -7,8 +7,8 @@ from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from app.views.mid_term_marks import MidTermMarksCRUD
 from app.views.base_crud import BaseCRUD
-from app.schemas.mid_term_marks import MidTermMarksSchema
-from app.models.mid_term_marks import MidTermMarksModel
+from app.schemas.mid_term_marks_schema import MidTermMarksSchema
+from app.models.mid_term_marks_model import MidTermMarksModel
 from app.utils.connection_manag import DatabaseManager
 
 

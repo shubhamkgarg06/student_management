@@ -3,7 +3,7 @@
     It includes methods for getting all sections, getting a section by ID, creating a new section,
     and retrieving students by section name.
 """
-from app.models.section import SectionModel
+from app.models.section_model import SectionModel
 
 class SectionCRUD:
 

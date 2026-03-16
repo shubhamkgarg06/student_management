@@ -8,8 +8,8 @@ from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from app.views.student import StudentCRUD
 from app.views.base_crud import BaseCRUD
-from app.schemas.student import StudentSchema , StudentPatchSchema
-from app.models.students import StudentModel
+from app.schemas.student_schema import StudentSchema , StudentPatchSchema
+from app.models.student_model import StudentModel
 from app.utils.connection_manag import DatabaseManager
 
 

@@ -5,8 +5,8 @@ The class interacts with the database using SQLAlchemy and uses Pydantic schemas
 This also consist of a method to calculate the percentage of marks obtained by a specific student in a specific section, which can be useful for generating reports or analyzing student performance.
 """
 
-from app.models.mid_term_marks import MidTermMarksModel
-from app.schemas.mid_term_marks import MidTermMarksSchema
+from app.models.mid_term_marks_model import MidTermMarksModel
+from app.schemas.mid_term_marks_schema import MidTermMarksSchema
 
 
 class MidTermMarksCRUD:
