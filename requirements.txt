@@ -6,3 +6,7 @@ pip install psycopg2
 pip install dotenv
 pip install pytest pytest-asyncio                                        
 pip install httpx anyio pytest-asyncio 
+
+
+# JWT and password hashing dependencies
+pip install python-jose passlib[bcrypt]

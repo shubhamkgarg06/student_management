@@ -11,6 +11,7 @@ from app.views.base_crud import BaseCRUD
 from app.schemas.student_schema import StudentSchema , StudentPatchSchema
 from app.models.student_model import StudentModel
 from app.utils.connection_manag import DatabaseManager
+from app.auth.dependencies import get_current_user , admin_only
 
 
 
@@ -23,7 +24,7 @@ router = APIRouter(
 
 
 @router.get('/')
-def get_students(db: Session = Depends(DatabaseManager.get_db)):
+def get_students(db: Session = Depends(DatabaseManager.get_db), user = Depends(admin_only)):
     """
     Retrieve all student records from the database.
     """
@@ -33,7 +34,7 @@ def get_students(db: Session = Depends(DatabaseManager.get_db)):
 
 
 @router.get('/{id_find}')
-def get_std_id(id_find : int, db: Session = Depends(DatabaseManager.get_db)):
+def get_std_id(id_find : int, db: Session = Depends(DatabaseManager.get_db) ):
     """
     Retrieve a student record by its ID.
     """
