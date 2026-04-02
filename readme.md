@@ -46,8 +46,12 @@ student_management_system/
 │
 ├── app/
 │   ├── main.py
-|   |
 │   ├── config.py
+│   |
+│   ├── auth
+|   |   |── dependency.py
+│   │   ├── jwt_handler.py
+│   │   └── password_handler.py
 │   │
 │   ├── models/
 |   |   |
@@ -55,22 +59,26 @@ student_management_system/
 │   │   ├── student_model.py
 │   │   ├── section_model.py
 │   │   ├── subject_model.py
-│   │   └── mid_term_marks_model.py
+│   │   |── mid_term_marks_model.py
+│   │   └── user_model.py
 │   │
 │   ├── schemas/
 │   │   ├── student_schema.py
 │   │   ├── section_schema.py
 │   │   ├── subject_schema.py
-│   │   └── mid_term_marks_schema.py
+│   │   |── mid_term_marks_schema.py
+│   │   └── user_schema.py
 │   │
 │   ├── routers/
 │   │   ├── student_router.py
 │   │   ├── section_router.py
 │   │   ├── subject_router.py
-│   │   └── mid_term_marks_router.py
+│   │   |── mid_term_marks_router.py
+│   │   └── user_router.py
 |   |
 |   |
 │   ├── views/
+│   │   |── auth.py
 │   │   ├── base_crud.py
 |   |   |── student.py
 │   │   ├── section.py
@@ -88,7 +96,11 @@ student_management_system/
 │   ├── utils/
 │       └── test_connection_manag.py
 │
-└── README.md
+|── README.md
+│── venv
+|── .env
+│── .gitignore
+└── requirements.txt
 
 ````
 
